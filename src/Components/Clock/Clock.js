@@ -22,6 +22,16 @@ const Clock = () => {
         setInterval(updateHandsPosition, 1000);
     }, [])
 
+    const getCurrentTime =()=>{
+        const currentDate = new Date();
+        const second = currentDate.getSeconds() < 10 ? `0${currentDate.getSeconds()}` : currentDate.getSeconds();
+        const minute = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes();
+        const hour = currentDate.getHours() % 12 || 12;
+        const AM_PM = currentDate.getHours() <= 12 ? 'AM' : 'PM';
+
+        return `${hour}:${minute}:${second} ${AM_PM}`
+    }
+
     return (
         <div className="clock-container">
             <div className="clock">
@@ -43,7 +53,7 @@ const Clock = () => {
                 <div className="number" style={{'--rotateBy' : '300deg', '--number' : 10}}>10</div>
                 <div className="number" style={{'--rotateBy' : '330deg', '--number' : 11}}>11</div>
             </div>
-            <div className="digital-time">{new Date().toLocaleTimeString()}</div>
+            <div className="digital-time">{getCurrentTime()}</div>
         </div>
     )
 }
