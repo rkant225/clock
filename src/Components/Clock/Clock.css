@@ -1,0 +1,112 @@
+.clock-container{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    display: flex;
+}
+
+.clock{
+    position: relative;
+    height: 50vmin;
+    width: 50vmin;
+    background-color: white;
+    border-radius: 50%;
+    margin: auto auto;
+    border: 1px solid black;
+    box-shadow: 0 0 3px 3px yellow,
+                0 0 4px 4px yellow,
+                0 0 5px 5px yellow,
+                0 0 6px 6px yellow,
+                0 0 7px 7px yellow;
+    animation: animate-color 7s linear 0s infinite;
+}
+
+.clock::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.number{
+    position: absolute;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    font-size: 1.5rem;
+    transform: rotate(var(--rotateBy));
+}
+
+.hand{
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    border-radius: 10px;
+    transform-origin: bottom;
+}
+
+.hour-hand{
+    width: 8px;
+    height: 20%;
+    background-color: black;
+    transform: translateX(-50%) rotate(var(--rotateBy));
+}
+
+.minute-hand{
+    width: 5px;
+    height: 35%;
+    background-color: black;
+    transform: translateX(-50%) rotate(var(--rotateBy));
+}
+.second-hand{
+    width: 2px;
+    height: 42%;
+    background-color: red;
+    transform: translateX(-50%) rotate(var(--rotateBy));
+}
+
+.digital-time{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    color: white;
+    font-size: 3rem;
+    transform: translateX(-50%);
+    padding: .5rem;
+    box-shadow: 0 0 3px 3px yellow,
+                0 0 5px 4px yellow,
+                0 0 7px 5px yellow,
+                0 0 9px 6px yellow,
+                0 0 11px 7px yellow;
+                animation: animate-color 5s linear 0s infinite;
+}
+
+@keyframes animate-color {
+    0%{ filter: hue-rotate(0deg);}
+    100%{ filter: hue-rotate(360deg);}
+}
+
+
+@media (max-width : 1024px) {
+    .clock{
+        height: 70vmin;
+        width: 70vmin;
+    }
+
+    .digital-time{
+        bottom: 10%;
+        left: 50%;
+        font-size: 1.5rem;
+        transform: translateX(-50%);
+        padding: .2rem;
+
+    }
+}
