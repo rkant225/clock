@@ -1,36 +1,52 @@
 import React, { useEffect, useState } from 'react'
 import './Clock.css';
 
+const getSecondHandRatio = ()=>{
+    const currentDate = new Date();   
+    const secondRatio = currentDate.getSeconds() / 60; 
+    return secondRatio;
+}
+
+const getMinuteHandRatio = ()=>{
+    const currentDate = new Date();  
+    const minuteRatio = ((getSecondHandRatio() + currentDate.getMinutes()) / 60);  
+    return minuteRatio;
+}
+
+const getHourHandRatio = ()=>{
+    const currentDate = new Date();    
+    const hourRatio = ((getMinuteHandRatio() + currentDate.getHours() % 12 || 12) / 12);
+    return hourRatio;
+}
+
+
 const Clock = () => {
-    const [rotate_hour_hand_by, setRotate_hour_hand_by] = useState('0');
-    const [rotate_minute_hand_by, setRotate_minute_hand_by] = useState('0');
-    const [rotate_second_hand_by, setRotate_second_hand_by] = useState('0');
+    const [rotate_hour_hand_by, setRotate_hour_hand_by] = useState(360 * getHourHandRatio());
+    const [rotate_minute_hand_by, setRotate_minute_hand_by] = useState(360 * getMinuteHandRatio());
+    const [rotate_second_hand_by, setRotate_second_hand_by] = useState(360 * getSecondHandRatio());
 
     const updateHandsPosition = ()=>{
-        const currentDate = new Date();
-
-        const secondRatio = currentDate.getSeconds() / 60;
-        const minuteRatio = ((secondRatio + currentDate.getMinutes()) / 60);
-        const hourRatio = ((minuteRatio + currentDate.getHours() % 12 || 12) / 12);
-
-        setRotate_second_hand_by(360 * secondRatio);
-        setRotate_minute_hand_by(360 * minuteRatio);
-        setRotate_hour_hand_by(360 * hourRatio);
+        setRotate_second_hand_by(360 * getSecondHandRatio());
+        setRotate_minute_hand_by(360 * getMinuteHandRatio());
+        setRotate_hour_hand_by(360 * getHourHandRatio());
     }
 
     useEffect(()=>{
-        setInterval(updateHandsPosition, 1000);
+        const intervalId = setInterval(updateHandsPosition, 1000);
+        return ()=>{
+            clearInterval(intervalId);
+        }
     }, [])
 
-    const getCurrentTime =()=>{
-        const currentDate = new Date();
-        const second = currentDate.getSeconds() < 10 ? `0${currentDate.getSeconds()}` : currentDate.getSeconds();
-        const minute = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes();
-        const hour = currentDate.getHours() % 12 || 12;
-        const AM_PM = currentDate.getHours() <= 12 ? 'AM' : 'PM';
+    // const getCurrentTime =()=>{
+    //     const currentDate = new Date();
+    //     const second = currentDate.getSeconds() < 10 ? `0${currentDate.getSeconds()}` : currentDate.getSeconds();
+    //     const minute = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes();
+    //     const hour = currentDate.getHours() % 12 || 12;
+    //     const AM_PM = currentDate.getHours() <= 12 ? 'AM' : 'PM';
 
-        return `${hour}:${minute}:${second} ${AM_PM}`
-    }
+    //     return `${hour}:${minute}:${second} ${AM_PM}`
+    // }
 
     return (
         <div className="clock-container">
@@ -53,7 +69,7 @@ const Clock = () => {
                 <div className="number" style={{'--rotateBy' : '300deg', '--number' : 10}}>10</div>
                 <div className="number" style={{'--rotateBy' : '330deg', '--number' : 11}}>11</div>
             </div>
-            <div className="digital-time">{getCurrentTime()}</div>
+            {/* <div className="digital-time">{getCurrentTime()}</div> */}
         </div>
     )
 }
