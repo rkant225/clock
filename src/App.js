@@ -2,11 +2,12 @@ import { useState } from "react";
 import "./App.css";
 import Clock from "./Components/Clock/Clock";
 import DigitalClock from "./Components/DigitalClock/DigitalClock";
+import DigitalDotClock from "./Components/DigitalDotClock/DigitalDotClock";
 import DotClock from "./Components/DotClock/DotClock";
 
 function App() {
-  const CLOCKS = [<Clock />, <DigitalClock/>, <DotClock />];
-  const [counter, setCounter] = useState(2);
+  const CLOCKS = [<Clock />, <DigitalClock/>, <DotClock />, <DigitalDotClock/>];
+  const [counter, setCounter] = useState(3);
   const updateCounter = () => {
     if (CLOCKS.length - 1 === counter) {
       setCounter(0);
